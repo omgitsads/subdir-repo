@@ -1,4 +1,3 @@
-raise 'dont load this'
 module EY
   module Serverside
     class DeployBase < Task
