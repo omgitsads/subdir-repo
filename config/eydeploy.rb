@@ -1,7 +1,8 @@
 def copy_repository_cache
-  shell.status "Copying to #{paths.active_release}"
+  shell.status "Copying to #{config.paths.active_release}"
   exclusions = Array(config.copy_exclude).map { |e| %|--exclude="#{e}"| }.join(' ')
-  run("mkdir -p #{paths.active_release} #{paths.releases_failed} #{paths.shared_config} && rsync -aq #{exclusions} #{paths.repository_cache}/app #{paths.active_release}")
+  run("mkdir -p #{config.paths.active_release} #{config.paths.releases_failed} #{config.paths.shared_config} && rsync -aq #{exclusions} #{config.paths.repository_cache}/#{config.app} #{config.paths.active_release}")
+
   shell.status "Ensuring proper ownership."
-  sudo("chown -R #{config.user}:#{config.group} #{paths.active_release} #{paths.releases_failed}")
+  sudo("chown -R #{config.user}:#{config.group} #{config.paths.active_release} #{config.paths.releases_failed}")
 end
